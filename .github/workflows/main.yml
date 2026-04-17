@@ -4,6 +4,7 @@ on:
   # Trigger the pipeline when code is pushed to main or develop
   push:
     branches:
+      - master
       - main
       - develop
   # Also trigger on any pull request
