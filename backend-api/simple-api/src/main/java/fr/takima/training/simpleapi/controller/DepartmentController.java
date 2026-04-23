@@ -2,8 +2,8 @@ package fr.takima.training.simpleapi.controller;
 
 import fr.takima.training.simpleapi.entity.Department;
 import fr.takima.training.simpleapi.entity.Student;
-import fr.takima.training.simpleapi.repository.DepartmentRepository;
-import fr.takima.training.simpleapi.repository.StudentRepository;
+import fr.takima.training.simpleapi.service.DepartmentService;
+import fr.takima.training.simpleapi.service.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,28 +13,38 @@ import java.util.List;
 @RequestMapping("/departments")
 public class DepartmentController {
 
-    private final DepartmentRepository departmentRepository;
-    private final StudentRepository studentRepository;
+    private final DepartmentService departmentService;
+    private final StudentService studentService;
 
-    public DepartmentController(DepartmentRepository departmentRepository, StudentRepository studentRepository) {
-        this.departmentRepository = departmentRepository;
-        this.studentRepository = studentRepository;
-    }
-
-    @GetMapping
-    public List<Department> getAllDepartments() {
-        return departmentRepository.findAll();
+    public DepartmentController(DepartmentService departmentService, StudentService studentService) {
+        this.departmentService = departmentService;
+        this.studentService = studentService;
     }
 
     @GetMapping("/{departmentName}")
     public ResponseEntity<Department> getDepartmentByName(@PathVariable String departmentName) {
-        return departmentRepository.findByName(departmentName)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Department department = departmentService.getDepartmentByName(departmentName);
+        if (department == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(department);
     }
 
     @GetMapping("/{departmentName}/students")
-    public List<Student> getStudentsByDepartment(@PathVariable String departmentName) {
-        return studentRepository.findByDepartmentName(departmentName);
+    public ResponseEntity<List<Student>> getStudentsByDepartment(@PathVariable String departmentName) {
+        Department department = departmentService.getDepartmentByName(departmentName);
+        if (department == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(studentService.getStudentsByDepartmentName(departmentName));
+    }
+
+    @GetMapping("/{departmentName}/count")
+    public ResponseEntity<Integer> getStudentsCountByDepartment(@PathVariable String departmentName) {
+        Department department = departmentService.getDepartmentByName(departmentName);
+        if (department == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(studentService.getStudentsNumberByDepartmentName(departmentName));
     }
 }
