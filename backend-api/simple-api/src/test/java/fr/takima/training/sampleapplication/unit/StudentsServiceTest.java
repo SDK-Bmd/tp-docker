@@ -110,4 +110,26 @@ class StudentsServiceTest {
     void testRemoveStudentWithNegativeId() {
         assertThrows(IllegalArgumentException.class, () -> studentService.removeStudentById(-5));
     }
+
+    @Test
+    void testUpdateStudent() {
+        // Tests the happy path of updateStudent — likely uncovered
+        when(studentDAO.save(student)).thenReturn(student);
+        Student result = studentService.updateStudent(student, 1L);
+        assertEquals(student, result);
+        assertEquals(1L, result.getId()); // verifies setId was called
+    }
+
+    @Test
+    void testUpdateStudentWithNegativeId() {
+        assertThrows(IllegalArgumentException.class,
+                () -> studentService.updateStudent(student, -1L));
+    }
+
+    @Test
+    void testGetStudentByIdWithZeroId() {
+        // Edge case: id == 0 should NOT throw (only id < 0 does)
+        when(studentDAO.findById(0L)).thenReturn(null);
+        assertNull(studentService.getStudentById(0L));
+    }
 }
