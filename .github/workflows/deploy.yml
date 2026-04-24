@@ -1,6 +1,6 @@
 # .github/workflows/deploy.yml
 #
-# Runs AFTER the build-and-push job succeeds on main.
+# Runs AFTER the build-and-push job succeeds on master.
 # This is the "CD" part of CI/CD — continuous deployment to your server.
 #
 # Required GitHub Secrets:
@@ -15,7 +15,7 @@ on:
   workflow_run:
     workflows: ["CI/CD devops"]
     types: [completed]
-    branches: [main]
+    branches: [master]
 
 jobs:
   deploy:
