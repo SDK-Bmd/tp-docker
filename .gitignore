@@ -1,0 +1,125 @@
+# =========================================================
+# SECRETS — NEVER COMMIT THESE
+# =========================================================
+
+# SSH private keys (any name, any format)
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+id_ecdsa
+id_ecdsa.pub
+id_dsa
+id_dsa.pub
+*.pem
+*.key
+*_key
+*_key.pub
+*.ppk
+takima_key
+takima_key.pub
+
+# Known hosts / auth
+.ssh/
+known_hosts
+
+# Environment files with secrets
+.env
+.env.local
+.env.*.local
+*.env
+
+# Ansible vault — decrypted versions (the encrypted one is safe to commit)
+*vault.decrypted*
+*.vault-password
+.vault_pass
+.vault_password
+
+# Cloud / Docker credentials
+.aws/
+.docker/config.json
+.kube/config
+
+# =========================================================
+# Build outputs
+# =========================================================
+
+# Maven
+target/
+**/target/
+*.jar
+*.war
+*.ear
+!.mvn/wrapper/maven-wrapper.jar
+
+# Node (if you add the front-end later)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+build/
+
+# =========================================================
+# IDE / Editor files
+# =========================================================
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Eclipse
+.classpath
+.project
+.settings/
+.metadata/
+
+# NetBeans
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# =========================================================
+# OS-level junk
+# =========================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# =========================================================
+# Logs / temp
+# =========================================================
+
+*.log
+logs/
+tmp/
+temp/
+*.swp
+*.swo
+*.bak
+*.tmp
