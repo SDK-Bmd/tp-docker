@@ -1,0 +1,9 @@
+# ansible/inventories/prod/group_vars/all.yml
+#
+# Non-sensitive, committed-to-git variables shared across all hosts.
+# For secrets like passwords, use an ansible-vault encrypted file
+# (see vault.yml in the same directory — NOT committed).
+
+dockerhub_user: <YOUR_DOCKERHUB_USERNAME>
+postgres_db: db
+postgres_user: usr

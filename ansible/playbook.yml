@@ -1,0 +1,24 @@
+---
+# ansible/playbook.yml
+#
+# Full deployment playbook for the 3-tier app (database + API + proxy).
+# Run with:
+#   ansible-playbook -i inventories/prod/setup.yml playbook.yml
+# Syntax-check first:
+#   ansible-playbook -i inventories/prod/setup.yml playbook.yml --syntax-check
+
+- name: Deploy Simple API stack
+  hosts: all
+  gather_facts: true
+  become: true
+
+  # Roles run in the order they're listed.
+  # The ordering matters: docker must be installed before we can create
+  # a network, network must exist before containers can join it, and
+  # the database must be up before the API tries to connect to it.
+  roles:
+    - docker
+    - network
+    - database
+    - app
+    - proxy

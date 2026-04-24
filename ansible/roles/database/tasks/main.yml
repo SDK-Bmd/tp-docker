@@ -1,0 +1,25 @@
+---
+# roles/database/tasks/main.yml
+#
+# Runs the PostgreSQL container.
+# Mirrors what your docker-compose.yml defines for the db service.
+
+- name: Pull PostgreSQL image
+  community.docker.docker_image:
+    name: "{{ dockerhub_user }}/tp-devops-database:latest"
+    source: pull
+
+- name: Run database container
+  community.docker.docker_container:
+    name: database
+    image: "{{ dockerhub_user }}/tp-devops-database:latest"
+    state: started
+    restart_policy: unless-stopped
+    networks:
+      - name: app-network
+    env:
+      POSTGRES_DB: "{{ postgres_db }}"
+      POSTGRES_USER: "{{ postgres_user }}"
+      POSTGRES_PASSWORD: "{{ postgres_password }}"
+    volumes:
+      - db-data:/var/lib/postgresql/data

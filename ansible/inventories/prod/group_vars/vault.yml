@@ -1,0 +1,14 @@
+# ansible/inventories/prod/group_vars/vault.yml
+#
+# ⚠️  SECRETS — this file MUST be encrypted with ansible-vault before commit.
+#
+# Create it fresh with:
+#   ansible-vault create inventories/prod/group_vars/vault.yml
+#
+# Or encrypt an existing file:
+#   ansible-vault encrypt inventories/prod/group_vars/vault.yml
+#
+# Run the playbook with the password:
+#   ansible-playbook -i inventories/prod/setup.yml playbook.yml --ask-vault-pass
+
+postgres_password: pwd

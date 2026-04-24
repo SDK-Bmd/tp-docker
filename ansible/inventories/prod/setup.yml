@@ -1,0 +1,15 @@
+# ansible/inventories/prod/setup.yml
+#
+# Inventory file for the production server.
+# Replace <YOUR_SERVER_DOMAIN> with your takima.io domain,
+# e.g. john-doe-formation.takima.io
+all:
+  vars:
+    ansible_user: admin
+    ansible_ssh_private_key_file: ~/.ssh/takima_key
+    # Use the venv python we install on the remote host — required for docker_container
+    ansible_python_interpreter: /opt/docker_venv/bin/python3
+  children:
+    prod:
+      hosts:
+        <YOUR_SERVER_DOMAIN>:

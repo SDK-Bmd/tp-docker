@@ -1,0 +1,24 @@
+---
+# roles/proxy/tasks/main.yml
+#
+# Runs the Apache httpd reverse proxy.
+# This is the ONLY container with a published port — port 80 on the host
+# maps to 80 in the container. Everything else stays internal to the
+# Docker network.
+
+- name: Pull proxy image
+  community.docker.docker_image:
+    name: "{{ dockerhub_user }}/tp-devops-httpd:latest"
+    source: pull
+    force_source: yes
+
+- name: Run proxy container
+  community.docker.docker_container:
+    name: httpd
+    image: "{{ dockerhub_user }}/tp-devops-httpd:latest"
+    state: started
+    restart_policy: unless-stopped
+    networks:
+      - name: app-network
+    ports:
+      - "80:80"

@@ -1,0 +1,57 @@
+---
+# roles/docker/tasks/main.yml
+#
+# Installs Docker CE on Debian following the official guide:
+# https://docs.docker.com/engine/install/debian/#install-using-the-repository
+
+- name: Install required packages
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+      - python3-venv
+    state: latest
+    update_cache: yes
+
+- name: Add Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: Add Docker APT repository
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_facts['distribution_release'] }} stable"
+    state: present
+    update_cache: yes
+
+- name: Install Docker
+  apt:
+    name: docker-ce
+    state: present
+
+- name: Install Python3 and pip3
+  apt:
+    name:
+      - python3
+      - python3-pip
+    state: present
+
+- name: Create a virtual environment for Docker SDK
+  command: python3 -m venv /opt/docker_venv
+  args:
+    creates: /opt/docker_venv
+
+- name: Install Docker SDK for Python in virtual environment
+  command: /opt/docker_venv/bin/pip install docker
+  args:
+    creates: /opt/docker_venv/lib/python3/site-packages/docker
+
+- name: Make sure Docker is running
+  service:
+    name: docker
+    state: started
+    enabled: yes
+  tags: docker

@@ -1,0 +1,10 @@
+---
+# roles/network/tasks/main.yml
+#
+# Creates the bridge network that ties the 3 containers together.
+# Same purpose as the `networks:` section in your docker-compose.yml.
+
+- name: Create app network
+  community.docker.docker_network:
+    name: app-network
+    state: present
