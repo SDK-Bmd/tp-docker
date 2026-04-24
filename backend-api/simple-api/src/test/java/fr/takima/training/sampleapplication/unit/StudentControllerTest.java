@@ -1,6 +1,7 @@
 package fr.takima.training.sampleapplication.unit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.takima.training.simpleapi.SimpleApiApplication;
 import fr.takima.training.simpleapi.controller.StudentController;
 import fr.takima.training.simpleapi.dto.StudentDTO;
 import fr.takima.training.simpleapi.entity.Department;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -27,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * without needing Testcontainers.
  */
 @WebMvcTest(StudentController.class)
+@ContextConfiguration(classes = SimpleApiApplication.class)
 class StudentControllerTest {
 
     @Autowired
